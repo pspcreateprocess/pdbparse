@@ -34,6 +34,7 @@ type_refs_fieldlist = {
     "LF_BCLASS": ["index"],
     "LF_ENUMERATE": [],
     "LF_MEMBER": ["index"],
+    "LF_STMEMBER": ["index"],
     "LF_MEMBER_ST": ["index"],
     "LF_METHOD": ["mlist"],
     "LF_NESTTYPE": ["index"],
@@ -740,6 +741,14 @@ subStruct = "substructs" / Struct(
                 "_pad" / Peek(Int8ul),
                 PadAlign,
             ),
+            "LF_STMEMBER":
+            "lfSTMember" / Struct(
+                CV_fldattr,
+                "index" / Int32ul,
+                "name" / CString(encoding="utf8"),
+                "_pad" / Peek(Int8ul),
+                PadAlign,
+            ),
             "LF_ENUMERATE":
             "lfEnumerate" / Struct(
                 CV_fldattr,
@@ -796,7 +805,9 @@ subStruct = "substructs" / Struct(
                 Padding(2),
                 "index" / Int32ul,
                 "name" / CString(encoding = "utf8"),
-            ),
+                "_pad" / Peek(Int8ul),
+                PadAlign,
+            )
         },
     ),
 )
